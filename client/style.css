@@ -1,0 +1,300 @@
+:root {
+  --color-tab-idle: #2c2c2c;
+  --color-tab-hover: #a1a1a1;
+  --color-tab-selected: #46a0f5;
+  --tab-margin: .75rem;
+  font-size: 12px;
+  font-family: Rubik;
+  color: #a1a1a1;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+@font-face {
+  font-family: 'Swap-Font';
+  src:
+    url('myTstack/fonts/Swap-Font.ttf?lbbqmo') format('truetype'),
+    url('myTstack/fonts/Swap-Font.woff?lbbqmo') format('woff'),
+    url('myTstack/fonts/Swap-Font.svg?lbbqmo#Swap-Font') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.viewbox {
+  overflow: hidden;
+  width: 100%;
+  flex-direction: row;
+  user-select: none;
+}
+
+.swap-icon-both, .swap-icon-fill, .swap-icon-stroke {
+  display: none;
+}
+
+.anno {
+  margin-left: .25rem;
+  font-size: 1rem;
+  display: none;
+}
+
+.scopelist {
+  position: absolute;
+  /* overflow: hidden; */
+  width: 95%;
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: var(--tab-margin);
+}
+
+[class^="selector"] {
+  position: relative;
+  width: 100%;
+  height: 0px;
+  border-width: 1.5px;
+  border-style: solid;
+}
+
+[class^="selectorTop"] {
+  margin-bottom: .5rem;
+}
+
+[class^="selectorBottom"] {
+  margin-top: .5rem;
+}
+
+.selectorTop-idle {
+  border-color: var(--color-tab-idle);
+}
+
+.selectorTop-active {
+  border-color: var(--color-tab-selected);
+}
+
+.selectorBottom-idle {
+  border-color: var(--color-tab-idle);
+}
+
+.selectorBottom-active {
+  border-color: var(--color-tab-selected);
+}
+
+.scope-idle:hover > .selectorTop-idle {
+  border-color: var(--color-tab-hover);
+}
+
+.divider {
+  display: none;
+  width: 100%;
+  height: 0px;
+  border: 1.5px solid var(--color-tab-idle);
+}
+
+
+
+[class^="swatch-"] {
+  display: flex;
+  margin: .25rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  cursor: pointer;
+}
+
+.addSwatch {
+  border: 2px solid red;
+  width: 1rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.swatch-active {
+  outline: 2px solid var(--color-tab-selected);
+}
+
+.swatch-idle {
+  outline: 2px solid var(--color-tab-idle);
+}
+
+.swatchlist {
+  /* position: absolute; */
+  /* border: 2px solid red; */
+  margin-top: calc(var(--tab-margin)*9);
+  flex-flow: row nowrap;
+  width: 95%;
+  display: flex;
+}
+
+
+
+[class^="scope-"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  font-size: 1.5rem;
+  width: 25%;
+  cursor: pointer;
+}
+
+.scope-active {
+  color: var(--color-tab-selected);
+}
+
+.scope-idle {
+  color: var(--color-tab-hover);
+}
+
+.stylelist {
+  position: absolute;
+  top: calc(var(--tab-margin)*5);
+  flex-flow: row nowrap;
+  width: 95%;
+  display: flex;
+}
+
+
+
+.style-idle:hover > .selectorBottom-idle {
+  border-color: var(--color-tab-hover);
+}
+
+[class^="style-"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  font-size: 1rem;
+  width: 33.33%;
+  cursor: pointer;
+}
+
+.style-active {
+  color: var(--color-tab-selected);
+}
+
+.style-idle {
+  color: var(--color-tab-hover);
+}
+
+
+
+@media only screen and (max-width: 120px){
+  .anno {
+    display: flex;
+  }
+  .styleanno {
+    margin-left: .5rem;
+  }
+  .swap-icon-both, .swap-icon-fill, .swap-icon-stroke {
+    display: block;
+  }
+  .divider {
+    /* position: relative; */
+    opacity: .5;
+    margin-left: 2px;
+    margin-top: 93px;
+    display: flex;
+  }
+  .viewbox {
+    flex-direction: column;
+  }
+  .stylelist {
+    top: 110px;
+    flex-direction: column;
+  }
+  .scopelist {
+    flex-direction: column;
+  }
+  [class^="scope-"] {
+    width: 100%;
+    margin: 0px;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+  }
+  [class^="style-"] {
+    width: 100%;
+    margin: 0px;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+  }
+  [class^="selector"] {
+    margin: 0px .5rem 0px .125rem;
+    width: 0px;
+    height: 20px;
+  }
+  [class^="selectorBottom"] {
+    order: -2;
+  }
+}
+
+@media only screen and (max-width: 80px) {
+  .anno {
+    display: none;
+  }
+  .styleanno {
+    display: none;
+  }
+}
+
+
+
+[class^="swap-icon-"], [class*=" swap-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'Swap-Font' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.swap-icon-artboard:before {
+  content: "\e900";
+}
+.swap-icon-doc:before {
+  content: "\e901";
+}
+.swap-icon-layer:before {
+  content: "\e902";
+}
+.swap-icon-selection:before {
+  content: "\e903";
+}
+.swap-icon-both:before {
+  content: "\e904";
+  color: #a1a1a1;
+}
+.swap-icon-fill:before {
+  content: "\e905";
+  color: #a1a1a1;
+}
+.swap-icon-stroke:before {
+  content: "\e906";
+  color: #a1a1a1;
+}
+.swap-icon-close:before {
+  content: "\e91f";
+}
+.swap-icon-angleDown:before {
+  content: "\e926";
+}
+.swap-icon-angleLeft:before {
+  content: "\e927";
+}
+.swap-icon-angleRight:before {
+  content: "\e928";
+}
+.swap-icon-angleUp:before {
+  content: "\e929";
+}
+.swap-icon-angleUpDown:before {
+  content: "\e915";
+}
