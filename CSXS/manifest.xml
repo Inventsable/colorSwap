@@ -34,12 +34,12 @@
           <Menu>colorSwap</Menu>
           <Geometry>
             <Size>
-              <Height>200</Height>
+              <Height>400</Height>
               <Width>150</Width>
             </Size>
             <MaxSize>
               <Height>400</Height>
-              <Width>400</Width>
+              <Width>200</Width>
             </MaxSize>
             <MinSize>
               <Height>200</Height>

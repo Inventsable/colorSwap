@@ -1,7 +1,12 @@
 var csInterface = new CSInterface();
-loadUniversalJSXLibraries();
-loadJSX('test.jsx');
 
+// Loading host dependencies
+loadUniversalJSXLibraries();
+// Verify host
+// loadJSX('test.jsx');
+
+// For cross-component communication, use:
+// Event.$on  ||   Event.$emit
 window.Event = new Vue();
 
 Vue.component('color-swap', {
