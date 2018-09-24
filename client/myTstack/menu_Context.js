@@ -3,9 +3,9 @@ var menu_ContextFlip = false;
 
 var menu_ContextXML = '<Menu> \
    <MenuItem Id="refresh" Label="Refresh panel" Enabled="true" Checked="false"/> \
+   <MenuItem Id="width" Label="Check width" Enabled="true" Checked="false"/> \
    <MenuItem Label="---" /> \
   </Menu>';
-  // <MenuItem Id="width" Label="Check width" Enabled="true" Checked="false"/> \
 
 csInterface.setContextMenu(menu_ContextXML, setContextMenuCallback);
 

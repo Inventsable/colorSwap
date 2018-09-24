@@ -1,11 +1,14 @@
 :root {
+  font-size: 12px;
   --color-tab-idle: #2c2c2c;
   --color-tab-hover: #a1a1a1;
   --color-tab-selected: #46a0f5;
   --tab-margin: .75rem;
-  font-size: 12px;
+  --font-size: .875rem;
   font-family: Rubik;
   color: #a1a1a1;
+  margin-left: .0625rem;
+  margin-right: .0625rem;
 }
 
 ::-webkit-scrollbar {
@@ -24,7 +27,6 @@
 
 
 .viewbox {
-  overflow: hidden;
   width: 100%;
   flex-direction: row;
   user-select: none;
@@ -36,21 +38,25 @@
 
 .anno {
   margin-left: .25rem;
-  font-size: 1rem;
+  font-size: var(--font-size);
   display: none;
 }
 
+.styleanno {
+  font-size: var(--font-size);
+}
+
 .scopelist {
-  position: absolute;
   /* overflow: hidden; */
-  width: 95%;
+  width: 100%;
   display: flex;
-  flex-flow: row nowrap;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* flex-flow: row nowrap; */
   margin-bottom: var(--tab-margin);
 }
 
 [class^="selector"] {
-  position: relative;
   width: 100%;
   height: 0px;
   border-width: 1.5px;
@@ -120,9 +126,10 @@
 .swatchlist {
   /* position: absolute; */
   /* border: 2px solid red; */
-  margin-top: calc(var(--tab-margin)*9);
+  /* margin-top: calc(var(--tab-margin)*9); */
+  margin-top: .5rem;
   flex-flow: row nowrap;
-  width: 95%;
+  width: 100%;
   display: flex;
 }
 
@@ -147,14 +154,10 @@
 }
 
 .stylelist {
-  position: absolute;
-  top: calc(var(--tab-margin)*5);
   flex-flow: row nowrap;
-  width: 95%;
+  width: 100%;
   display: flex;
 }
-
-
 
 .style-idle:hover > .selectorBottom-idle {
   border-color: var(--color-tab-hover);
@@ -165,7 +168,7 @@
   justify-content: center;
   align-items: center;
   flex-flow: column nowrap;
-  font-size: 1rem;
+  font-size: 1.5rem;
   width: 33.33%;
   cursor: pointer;
 }
@@ -178,9 +181,19 @@
   color: var(--color-tab-hover);
 }
 
-
-
+/* FOLD 1 -- Column with annotation */
 @media only screen and (max-width: 120px){
+  .viewbox {
+    overflow: hidden;
+  }
+  .swatchlist {
+    position: absolute;
+    top: calc(var(--tab-margin)*20);
+    justify-content: center;
+  }
+  [class^="swatch-"] {
+    width: 25%;
+  }
   .anno {
     display: flex;
   }
@@ -191,21 +204,26 @@
     display: block;
   }
   .divider {
-    /* position: relative; */
     opacity: .5;
     margin-left: 2px;
-    margin-top: 93px;
+    margin-top: .25rem;
     display: flex;
+    position: absolute;
+    top: calc(var(--tab-margin)*11.125);
   }
   .viewbox {
     flex-direction: column;
   }
   .stylelist {
-    top: 110px;
+    position: absolute;
+    top: calc(var(--tab-margin)*12);
+    /* top: 110px; */
     flex-direction: column;
   }
   .scopelist {
+    position: absolute;
     flex-direction: column;
+    flex-wrap: wrap;
   }
   [class^="scope-"] {
     width: 100%;
@@ -222,6 +240,7 @@
     flex-direction: row;
   }
   [class^="selector"] {
+    position: relative;
     margin: 0px .5rem 0px .125rem;
     width: 0px;
     height: 20px;
@@ -231,15 +250,49 @@
   }
 }
 
-@media only screen and (max-width: 80px) {
-  .anno {
-    display: none;
+/* FOLD 2 -- Row wrapped, 2 x 2 */
+@media only screen and (max-width: 90px) {
+  .stylelist, .scopelist {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    flex-direction: row;
+    position: relative;
+    top: 0px;
+    flex-wrap: wrap;
   }
-  .styleanno {
+  .divider {
+    top: calc(var(--tab-margin)*6.3);
+  }
+  [class^="scope-"] {
+    width: 50%;
+  }
+  [class^="selectorTop"] {
+    margin: 0px 10% 0px .125rem;
+  }
+  .anno {
     display: none;
   }
 }
 
+/* FOLD 3 -- Minimum vertical toolbar */
+@media only screen and (max-width: 60px) {
+  .swatchlist {
+    flex-direction: column;
+  }
+  .styleanno {
+    display: none;
+  }
+  [class^="scope-"] {
+    width: 100%;
+  }
+  [class^="selector"] {
+    margin: 0px .35rem 0px .125rem;
+  }
+  .divider {
+    top: calc(var(--tab-margin)*11.25);
+  }
+}
 
 
 [class^="swap-icon-"], [class*=" swap-icon-"] {

@@ -218,4 +218,15 @@ var app = new Vue({
   methods: {
 
   },
+  updated() {
+    if (window.matchMedia("(max-width: 120px)").matches) {
+      console.log('Folding level 1');
+    } else if (window.matchMedia("(max-width: 90px)").matches) {
+      console.log('Folding level 2');
+    } else if (window.matchMedia("(max-width: 60px)").matches) {
+      console.log('Folding level 3');
+    } else {
+      /* Maximum */
+    }
+  }
 });
