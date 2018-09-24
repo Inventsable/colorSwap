@@ -1,22 +1,13 @@
-// var csInterface = new CSInterface();
-// var appSkin = csInterface.hostEnvironment.appSkinInfo;
-// var sysPath = csInterface.getSystemPath(SystemPath.EXTENSION);
-// var logPath = sysPath + "/log/";
-// var hostPath = sysPath + "/host/";
-// var appName = csInterface.hostEnvironment.appName;
-
-// loadUniversalJSXLibraries();
-// console.log(`Loading for ${appName}`);
-// loadJSX(`${appName}.jsx`);
-// console.log(appUI);
+var csInterface = new CSInterface();
 
 Vue.component('color-swap', {
-  // props: ['icon', 'toggle'],
+  // props: [''],
   template : `
   <div class="viewbox">
     <scope-list></scope-list>
     <div class="divider"></div>
     <style-list></style-list>
+    <swapper></swapper>
     <swatch-list></swatch-list>
   </div>
   `,
@@ -36,9 +27,8 @@ Vue.component('swatch-list', {
       <div
         v-for="swatch in swatches"
         :class="(swatch.isActive) ? 'swatch-active' : 'swatch-idle'"
-        @click="selectSwatch(swatch)">
+        @click="sendSwatch(swatch)">
       </div>
-
     </div>
   `,
   // <div
@@ -51,12 +41,22 @@ Vue.component('swatch-list', {
         {
           color: '#ffffff',
           key: 0,
-          isActive : true
+          isActive : false,
         },
         {
           color: '#000000',
           key: 1,
-          isActive : false
+          isActive : false,
+        },
+        {
+          color: '#ff0000',
+          key: 0,
+          isActive : false,
+        },
+        {
+          color: '#0000ff',
+          key: 1,
+          isActive : false,
         },
       ],
     }
@@ -67,7 +67,7 @@ Vue.component('swatch-list', {
   },
   methods: {
     readSwatches() {
-
+      //
     },
     updateSwatches() {
       for (var i = 0; i < this.swatches.length; i++) {
@@ -80,7 +80,7 @@ Vue.component('swatch-list', {
     add : function () {
       var newSwatch = {
         color: "#454545",
-        // key: this.swatches.length,
+        key: this.swatches.length,
         isActive : false
       };
       this.swatches.push(newSwatch)
@@ -99,9 +99,133 @@ Vue.component('swatch-list', {
     selectSwatch: function(swatch) {
       this.clearSelected()
       swatch.isActive = true;
+    },
+    sendSwatch: function(swatch) {
+      console.log(swatch.color);
     }
   }
 });
+
+
+Vue.component('swapper', {
+  template: `
+    <div class="swaplist">
+      <div
+        :class="(drops[0].isActive) ? 'drop-active' : 'drop-idle'"
+        @click="selectDrop(drops[0])">
+      </div>
+      <div class="flipper"
+        @click="flip(drops[0], drops[1])">
+        <span :class="(isMinim) ? 'swap-icon-swapV' : 'swap-icon-swapH'"></span>
+      </div>
+      <div
+        :class="(drops[1].isActive) ? 'drop-active' : 'drop-idle'"
+        @click="selectDrop(drops[1])">
+      </div>
+    </div>
+  `,
+  data() {
+    return {
+      isMinim: false,
+      drops : [
+        {
+          color: 'transparent',
+          key: 0,
+          isActive : true
+        },
+        {
+          color: 'transparent',
+          key: 1,
+          isActive : false
+        },
+      ],
+    }
+  },
+  mounted: function () {
+    this.updateDrops();
+    window.addEventListener('resize', this.handleResize);
+  },
+  beforeDestroy: function () {
+    window.removeEventListener('resize', this.handleResize);
+  },
+  computed: {
+    isMin: function() {
+      var res = false;
+      if (window.matchMedia("(max-width: 60px)").matches)
+        res = true;
+      else
+        res = false;
+      return res;
+    }
+  },
+  methods: {
+    handleResize (event) {
+      if (window.innerWidth < 61) {
+        this.isMinim = true;
+      } else {
+        this.isMinim = false;
+      }
+    },
+    updateDrops: function() {
+      var drop1 = this.$el.children[0];
+      drop1.style.backgroundColor = this.drops[0].color;
+      var drop2 = this.$el.children[2];
+      drop2.style.backgroundColor = this.drops[1].color;
+    },
+    flip: function(drop1, drop2) {
+      console.log(drop1, drop2);
+    },
+    clearSelected: function() {
+      for (var i = 0; i < this.drops.length; i++) {
+        this.drops[i].isActive = false;
+      }
+    },
+    selectDrop: function(drop) {
+      this.clearSelected()
+      drop.isActive = true;
+    },
+  }
+});
+
+// Vue.component('swapper', {
+//   template: `
+//     <div class="swaplist">
+//       <div
+//         v-for="drop in drops"
+//         :class="(drop.isActive) ? 'drop-active' : 'drop-idle'"
+//         @click="selectTab(drop)">
+//       </div>
+//     </div>
+//   `,
+//   data() {
+//     return {
+//       drops : [
+//         {
+//           color: '#ff0000',
+//           key: 0,
+//           isActive : true
+//         },
+//         {
+//           color: '#0000ff',
+//           key: 1,
+//           isActive : false
+//         },
+//       ],
+//     }
+//   },
+//   methods: {
+//     clearSelected: function() {
+//       for (var i = 0; i < this.drops.length; i++) {
+//         this.drops[i].isActive = false;
+//       }
+//     },
+//     selectSwap: function(drop) {
+//       this.clearSelected()
+//       drop.isActive = true;
+//     }
+//   }
+// });
+
 
 Vue.component('scope-list', {
   template: `
@@ -213,20 +337,43 @@ Vue.component('style-list', {
 var app = new Vue({
   el: '#app',
   data: {
-
+   fullHeight: document.documentElement.clientHeight,
+   fullWidth: window.innerWidth,
+   cs: {},
+  },
+  mounted: function () {
+    this.cs = new CSInterface();
+    window.addEventListener('resize', this.handleResize);
+  },
+  beforeDestroy: function () {
+    window.removeEventListener('resize', this.handleResize);
   },
   methods: {
-
-  },
-  updated() {
-    if (window.matchMedia("(max-width: 120px)").matches) {
-      console.log('Folding level 1');
-    } else if (window.matchMedia("(max-width: 90px)").matches) {
-      console.log('Folding level 2');
-    } else if (window.matchMedia("(max-width: 60px)").matches) {
-      console.log('Folding level 3');
-    } else {
-      /* Maximum */
+    handleResize (event) {
+      this.fullWidth = document.documentElement.clientWidth
+      this.fullHeight = document.documentElement.clientHeight
+      // console.log("w:" + this.fullWidth + ", h:" + this.fullHeight);
+      // var w = this.fullWidth;
+      // if (window.matchMedia("(max-width: 60px)").matches) {
+      //   console.log('Folding level 1 - MIN');
+      //   csInterface.resizeContent(w, 400)
+      // } else if (window.matchMedia("(max-width: 90px)").matches) {
+      //   console.log('Folding level 2');
+      //   csInterface.resizeContent(w, 300)
+      // } else if (window.matchMedia("(max-width: 120px)").matches) {
+      //   console.log('Folding level 3');
+      //   csInterface.resizeContent(w, 360)
+      // } else {
+      //   console.log('Folding level 4 - MAX');
+      //   csInterface.resizeContent(w, 200)
+      // }
+    },
+    setPanelHeight (h) {
+      var w = this.fullWidth;
+      var cs = this.cs;
+      cs.resizeContent(w,h)
     }
   }
 });
+
+// csInterface.resizeContent(400,300)
