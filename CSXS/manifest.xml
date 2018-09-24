@@ -1,13 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- 1) -->
 <ExtensionManifest ExtensionBundleId="com.colorswap" ExtensionBundleVersion="1.0.0" Version="7.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ExtensionList>
-    <!-- 2) -->
     <Extension Id="com.colorswap.panel" Version="1.0.0" />
   </ExtensionList>
   <ExecutionEnvironment>
     <HostList>
-      <!-- 3) -->
       <Host Name="ILST" Version="[18,99.9]" />
       <Host Name="PHSP" Version="[19,99.9]" />
       <Host Name="PHXS" Version="[19,99.9]" />
@@ -20,27 +17,25 @@
     </RequiredRuntimeList>
   </ExecutionEnvironment>
   <DispatchInfoList>
-    <!-- 2) -->
     <Extension Id="com.colorswap.panel">
       <DispatchInfo>
         <Resources>
-          <!-- 4) -->
           <MainPath>./client/index.html</MainPath>
-          <!-- 5) -->
-          <!-- <ScriptPath>./host/index.jsx</ScriptPath> -->
-          <CEFCommandLine />
+          <CEFCommandLine>
+            <Parameter>--enable-nodejs</Parameter>
+            <Parameter>--mixed-context</Parameter>
+          </CEFCommandLine>
         </Resources>
         <Lifecycle>
           <AutoVisible>true</AutoVisible>
         </Lifecycle>
         <UI>
           <Type>Panel</Type>
-          <!-- 6) -->
           <Menu>colorSwap</Menu>
           <Geometry>
             <Size>
               <Height>200</Height>
-              <Width>200</Width>
+              <Width>150</Width>
             </Size>
             <MaxSize>
               <Height>400</Height>

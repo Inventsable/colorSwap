@@ -151,7 +151,7 @@
   display: flex;
 }
 
-.flipper {
+[class^="flipper-"] {
   height: 2rem;
   font-size: 1.5rem;
   width: 30%;
@@ -162,6 +162,14 @@
   margin: 0px 1px;
   /* margin: 0px .5rem; */
   cursor: pointer;
+}
+
+.flipper-active {
+  opacity: 1;
+}
+
+.flipper-idle {
+  opacity: .25;
 }
 
 [class^="drop-"] {
@@ -329,7 +337,7 @@
   .divider {
     top: calc(var(--tab-margin)*6.3);
   }
-  .flipper {
+  [class^="flipper-"] {
     padding: 0px .25rem;
   }
   [class^="drop-"] {
@@ -381,7 +389,7 @@
     width: 70%;
     min-width: 24px;
   }
-  .flipper {
+  [class^="flipper-"] {
     width: 60%;
     min-width: 24px;
     display: flex;
@@ -401,8 +409,9 @@
 }
 
 
+
+/* icomoon font */
 [class^="swap-icon-"], [class*=" swap-icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'Swap-Font' !important;
   speak: none;
   font-style: normal;
@@ -410,9 +419,7 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-  /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .swap-icon-swapH:before {
@@ -421,7 +428,6 @@
 .swap-icon-swapV:before {
   content: "\e908";
 }
-
 .swap-icon-artboard:before {
   content: "\e900";
 }
